@@ -1720,6 +1720,11 @@ class Actor : Thinker native
 		Haptics.Rumble("misc/push");
 	}
 
+	virtual void PlayerWasPushedMakeRumble(actor source)
+	{
+		Haptics.Rumble("misc/pushed");
+	}
+
 	//----------------------------------------------------------------------------
 	//
 	// PROC A_CheckSkullDone
