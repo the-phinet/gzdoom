@@ -44,7 +44,7 @@ jobs:
         - name: Linux GCC Latest # rolling default, not actually latest
           os: ubuntu-latest
           extra_options: -DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++
-          deps_cmdline: sudo apt-get update && sudo apt-get install libsdl2-dev libvpx-dev libwebp-dev
+          deps_cmdline: sudo apt-get update && sudo apt-get install libsdl2-dev libvpx-dev libwebp-dev waylandpp-dev
           build_type: Release
 
         - name: Linux Clang 11 # oldest version available
