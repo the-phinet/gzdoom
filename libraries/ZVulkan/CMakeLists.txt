@@ -1,4 +1,5 @@
-cmake_minimum_required(VERSION 3.15)
+cmake_minimum_required(VERSION 3.24)
+
 project(zvulkan)
 
 option( VULKAN_USE_XLIB "Use Vulkan xlib (X11) WSI integration" ON )
@@ -188,13 +189,19 @@ if(WIN32)
 	add_definitions(-DUNICODE -D_UNICODE)
 else()
 	set(ZVULKAN_SOURCES ${ZVULKAN_SOURCES} ${ZVULKAN_UNIX_SOURCES})
-	if(NOT HAIKU AND NOT CMAKE_SYSTEM_NAME MATCHES "FreeBSD|NetBSD|OpenBSD|DragonFly")
+	if(APPLE)
+		find_package(Vulkan REQUIRED COMPONENTS MoltenVK)
+		set(ZVULKAN_LIBS Vulkan::Vulkan)
+	elseif(NOT HAIKU AND NOT CMAKE_SYSTEM_NAME MATCHES "FreeBSD|NetBSD|OpenBSD|DragonFly")
 		set(ZVULKAN_LIBS ${CMAKE_DL_LIBS} -ldl)
 	else()
 		set(ZVULKAN_LIBS ${CMAKE_DL_LIBS})
 	endif()
 	add_definitions(-DUNIX -D_UNIX)
 	add_link_options(-pthread)
+endif()
+
+if(APPLE)
 endif()
 
 if(MSVC)
@@ -206,7 +213,13 @@ if(MSVC)
 endif()
 
 add_library(zvulkan STATIC ${ZVULKAN_SOURCES} ${ZVULKAN_INCLUDES} ${VULKAN_INCLUDES})
-target_link_libraries(zvulkan ${ZVULKAN_LIBS})
+
+if(APPLE)
+    target_link_libraries(zvulkan Vulkan::Vulkan ${ZVULKAN_LIBS})
+else()
+    target_link_libraries(zvulkan ${ZVULKAN_LIBS})
+endif()
+
 set_target_properties(zvulkan PROPERTIES CXX_STANDARD 17)
 
 if(MSVC)
