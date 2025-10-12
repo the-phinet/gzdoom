@@ -29,10 +29,10 @@ ErrorWindow::ErrorWindow(std::vector<uint8_t> initminidump) : Widget(nullptr, Wi
 {
 	FStringf caption("Fatal Error - " GAMENAME " %s (%s)", GetVersionString(), GetGitTime());
 	SetWindowTitle(caption.GetChars());
-	SetWindowBackground(Colorf::fromRgba8(51, 51, 51));
-	SetWindowBorderColor(Colorf::fromRgba8(51, 51, 51));
-	SetWindowCaptionColor(Colorf::fromRgba8(33, 33, 33));
-	SetWindowCaptionTextColor(Colorf::fromRgba8(226, 223, 219));
+	// SetWindowBackground(Colorf::fromRgba8(51, 51, 51));
+	// SetWindowBorderColor(Colorf::fromRgba8(51, 51, 51));
+	// SetWindowCaptionColor(Colorf::fromRgba8(33, 33, 33));
+	// SetWindowCaptionTextColor(Colorf::fromRgba8(226, 223, 219));
 
 	LogView = new LogViewer(this);
 	ClipboardButton = new PushButton(this);
@@ -233,8 +233,8 @@ void LogViewer::OnPaintFrame(Canvas* canvas)
 {
 	double w = GetFrameGeometry().width;
 	double h = GetFrameGeometry().height;
-	Colorf bordercolor = Colorf::fromRgba8(100, 100, 100);
-	canvas->fillRect(Rect::xywh(0.0, 0.0, w, h), Colorf::fromRgba8(38, 38, 38));
+	// Colorf bordercolor = Colorf::fromRgba8(100, 100, 100);
+	canvas->fillRect(Rect::xywh(0.0, 0.0, w, h), Colorf::fromRgba8(0, 0, 0));
 	//canvas->fillRect(Rect::xywh(0.0, 0.0, w, 1.0), bordercolor);
 	//canvas->fillRect(Rect::xywh(0.0, h - 1.0, w, 1.0), bordercolor);
 	//canvas->fillRect(Rect::xywh(0.0, 0.0, 1.0, h - 0.0), bordercolor);
